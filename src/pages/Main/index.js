@@ -10,6 +10,7 @@ export default class Main extends Component {
   state = {
     newRepo: '',
     repositories: [],
+    loading: false,
   }
 
   handleInputChange = e => {
@@ -18,6 +19,8 @@ export default class Main extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    this.setState({ loading: true });
 
     const { newRepo, repositories } = this.state;
 
@@ -33,13 +36,14 @@ export default class Main extends Component {
     this.setState({
       repositories: [...repositories, data ],
       newRepo: '',
+      loading: false,
     })
 
   }
 
   render(){
 
-    const { newRepo } = this.state;
+    const { newRepo, loading } = this.state;
 
     return (
       <Container>
@@ -56,7 +60,7 @@ export default class Main extends Component {
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton>
+          <SubmitButton loading={loading}>
             <FaPlus color="#fff" size={14}/>
           </SubmitButton>
 
